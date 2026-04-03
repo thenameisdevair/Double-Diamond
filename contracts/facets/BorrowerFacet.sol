@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {AppStorage} from "../libraries/AppStorage.sol";
+// import {AppStorage} from "../libraries/AppStorage.sol";
+import {AppStorage, BorrowRecord} from "../libraries/AppStorage.sol";
 
 contract BorrowerFacet {
     AppStorage internal s;
@@ -21,10 +22,16 @@ contract BorrowerFacet {
         s.erc20Balances[msg.sender] -= collateral;
         s.erc20Balances[address(this)] += collateral;
 
+        // s.borrowRecords[tokenId] = BorrowRecord({
+        //     borrower: msg.sender,
+        //     returnTime: block.timestamp + duration,
+        //     active: true
+        // });
         s.borrowRecords[tokenId] = BorrowRecord({
-            borrower: msg.sender,
-            returnTime: block.timestamp + duration,
-            active: true
+        originalOwner: s.perowner[tokenId],
+        borrower: msg.sender,
+        returnTime: block.timestamp + duration,
+        active: true
         });
 
         s.perowner[tokenId] = msg.sender;

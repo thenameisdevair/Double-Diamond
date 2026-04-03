@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {AppStorage} from "../libraries/AppStorage.sol";
+// import {AppStorage} from "../libraries/AppStorage.sol";
+import {AppStorage, MultisigProposal} from "../libraries/AppStorage.sol";
 import {IDiamondCut} from "../interfaces/IDiamondCut.sol";
 
 contract MultisigFacet {
