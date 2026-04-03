@@ -17,12 +17,12 @@ contract NFTBuild {
     require(s.owner == msg.sender);
     s.perowner[s.totalSupply += 1] = to;
     s.balances[to] += 1;
-    s.tokenURI[s.totalSupply] = uri;
+    s.tokenURIs[s.totalSupply] = uri;
     emit Transfer(address(0), to, s.totalSupply);
     }
 
-    function transferFrom(address from, address to, uint256 tokenID) external {
-        require(s.owner == msg.sender || s.getapprove[tokenID] == msg.sender || s.approveOperator[from][msg.sender]);
+    function transferFromNFT(address from, address to, uint256 tokenID) external {
+        require(s.owner == msg.sender || msg.sender == s.perowner[tokenID] ||s.getapprove[tokenID] == msg.sender || s.approveOperator[from][msg.sender]);
         require(to != address(0));
         require(from == s.perowner[tokenID]);
 
@@ -36,7 +36,7 @@ contract NFTBuild {
 
     }
 
-    function approve(address to, uint256 tokenID) external {
+    function approveNFT(address to, uint256 tokenID) external {
         require(to != address(0));
         require(msg.sender == s.perowner[tokenID]);
 
@@ -58,7 +58,7 @@ contract NFTBuild {
         return s.perowner[tokenID];
     }
 
-    function balanceOf(address owner) external view returns(uint256) {
+    function balanceOfNFT(address owner) external view returns(uint256) {
         return s.balances[owner];
     }
 
@@ -71,7 +71,7 @@ contract NFTBuild {
         return s.approveOperator[owner][operator];
     }
 
-    function tokenURI(uint256 tokenID) external view returns(string memory) {
+    function tokenURIBasic(uint256 tokenID) external view returns(string memory) {
     return s.tokenURIs[tokenID];
     }   
 
